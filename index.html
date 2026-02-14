@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolution</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu">
+      <h1>Merge JS Terminal</h1>
+      <form class="blue-border">
+        <label for="name">Name</label><br>
+        <input type="text" id="playername" name="name" value="Player" class="blue-border"><br><br>
+
+        <label for="difficulty">difficulty</label><br>
+        <select id="difficulty" name="difficulty" class="blue-border">
+          <option value="easy">easy</option>
+          <option value="medium">medium</option>
+          <option value="hard">hard</option>
+        </select><br><br>
+
+        <button type="button" id="start" class="blue-border">Play</button><br>
+      </form>
+    </div>
+    <div id="game" hidden>
+      <h1>web prog evolution</h1>
+      <div id="left">
+      <aside class="blue-border">
+        <pre>
+          Name        : <span id="outname"></span>
+          Fifficulty  : <span id="outdif"></span>
+          time        : <span id="time"></span>
+          score       : <span id="score"></span>
+        </pre>
+        <button type="button" id="draw" class="blue-border">DRAW</button>
+      </aside>
+      <aside class="blue-border">
+        <pre id="evoscores">
+
+        </pre>
+      </aside>
+    </div>
+      <table></table>
+    </div>
+
+    <div id="tooltip" style="display: none;">
+      <p id="tooltip-text"></p>
+    </div>
+    <div id="gameover" hidden>
+      <h1>Time is over!</h1>
+      <button type="button" id="home" class="blue-border">BACK TO HOME</button>
+      <button type="button" id="restart" class="blue-border">RESTART GAME</button>
+    </div>
+    <script src="evolutions.js"></script>
+    <script src="main.js"></script>
+
+  </body>
+</html>
