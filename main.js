@@ -35,6 +35,7 @@ let playername;
 let score = 0;
 let target1 = null;
 let target2 = null;
+let tooltipTimeout = null;
 
 function startGame(){
     playername = pname.value;
@@ -101,6 +102,7 @@ function getRand1() {
 }
 
 function paintTable(){
+    hideTooltip();
     table.innerHTML ="";
     for(let i = 0; i<gameBoard.length; i++){
         const tr = document.createElement("tr");
@@ -230,9 +232,13 @@ function addHoverEffectToTiles() {
     const tooltipText = document.querySelector("#tooltip-text");
     
     tdElements.forEach(td => {
-        let tooltipTimeout;
         td.addEventListener("mouseenter", () => {
+            if (tooltipTimeout) {
+                clearTimeout(tooltipTimeout);
+                tooltipTimeout = null;
+            }
             tooltipTimeout = setTimeout(() => {
+                if (!td.isConnected) return;
                 const bgImg = td.style.backgroundImage;
                 if (!bgImg) return;
                 const match = bgImg.match(/\/([^\/]+\.png)/);
@@ -242,7 +248,6 @@ function addHoverEffectToTiles() {
                 for (const evo of evolutions) {
                     for (const step of evo.steps) {
                         if (step.img === imageName) {
-                            tooltip.style.display = "block";
                             tooltipText.innerHTML = `
                                 <strong>${evo.name}</strong><br>
                                 ${evo.description}<br>
@@ -254,18 +259,33 @@ function addHoverEffectToTiles() {
                     }
                     if (found) break;
                 }
+                if (!found) return;
+
+                tooltip.style.visibility = "hidden";
+                tooltip.style.display = "block";
                 const rect = td.getBoundingClientRect();
-                tooltip.style.left = `${rect.left + rect.width / 2 - tooltip.offsetWidth / 2}px`;
-                tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 10}px`;
+                tooltip.style.left = `${rect.left + rect.width / 2}px`;
+                tooltip.style.top = `${rect.top + window.scrollY - 10}px`;
+                tooltip.style.transform = "translate(-50%, -100%)";
+                tooltip.style.visibility = "visible";
                 
-            }, 1000);
+            }, 1500);
         });
 
         td.addEventListener("mouseleave", () => {
-            clearTimeout(tooltipTimeout);
-            tooltip.style.display = "none";
+            hideTooltip();
         });
     });
+}
+
+function hideTooltip() {
+    const tooltip = document.querySelector("#tooltip");
+    if (tooltipTimeout) {
+        clearTimeout(tooltipTimeout);
+        tooltipTimeout = null;
+    }
+    tooltip.style.display = "none";
+    tooltip.style.visibility = "hidden";
 }
 
 function gameOver(){
@@ -295,9 +315,5 @@ function restart(){
     table.innerHTML="";
     startGame();
 }
-
-
-
-
 
 

@@ -103,6 +103,7 @@ aside{
 #tooltip {
     display: none;
     position: absolute;
+    pointer-events: none;
     font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     background-color: rgba(255, 255, 255, 0.8);
     color: black;
@@ -137,12 +138,3 @@ aside{
     padding: 20px;
     gap: 15px; /* Különbség a gombok között */
 }
-
-
-
-
-
-
-
-
-  
